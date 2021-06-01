@@ -28,13 +28,5 @@ function LeaseManager() {
   );
 }
 
-var testData = [
-  {id:"0", name:"lease1", startDate:"01/01/2020", endDate:"12/31/2020", paymentAmount:"$500.00", numPayments:"12", interestRate:"4.2%"}, 
-  {id:"1", name:"lease2", startDate:"01/01/2019", endDate:"12/31/2020", paymentAmount:"$200.00", numPayments:"24", interestRate:"3.5%"}, 
-  {id:"2", name:"lease3", startDate:"01/01/2020", endDate:"07/01/2020", paymentAmount:"$500.00", numPayments:"6", interestRate:"7.2%"}, 
-  {id:"3", name:"lease4", startDate:"01/01/2020", endDate:"12/31/2020", paymentAmount:"$500.00", numPayments:"12", interestRate:"4.2%"}, 
-  {id:"4", name:"lease5", startDate:"01/01/2020", endDate:"12/31/2020", paymentAmount:"$500.00", numPayments:"12", interestRate:"4.2%"}, 
-  {id:"5", name:"lease6", startDate:"01/01/2020", endDate:"12/31/2020", paymentAmount:"$500.00", numPayments:"12", interestRate:"4.2%"}, 
-]
 
 export default LeaseManager;

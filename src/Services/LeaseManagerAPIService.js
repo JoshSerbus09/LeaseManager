@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-var leaseManagerApiUrl = 'http://localhost:20007/api/Lease/';
+var leaseManagerApiUrl = 'http://localhost:5000/api/Lease/';
 
 export default class LeaseManagerAPIService extends Component {
     getAllLeases = () => {
