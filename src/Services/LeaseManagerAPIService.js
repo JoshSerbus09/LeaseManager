@@ -1,32 +1,33 @@
-import React, {Component} from 'react';
 import axios from 'axios';
 
-var leaseManagerApiUrl = 'http://localhost:5000/api/Lease/';
+var leaseManagerApiUrl = 'http://localhost:5000/';
 
-export default class LeaseManagerAPIService extends Component {
-    getAllLeases = () => {
+class LeaseManagerAPIService{
+    GetAllLeases = () => {
         return axios.get(leaseManagerApiUrl + "GetAllLeases");
     };
 
-    getLeaseById = (id) => {
+    GetLeaseById = (id) => {
         return axios.get(leaseManagerApiUrl + "GetLeaseById?id=" + id);
     };
 
-    getLeasesByIds = (ids) => {
+    GetLeasesByIds = (ids) => {
         let idList = Array.from(ids).map(id => "&id=" + id);
 
         return axios.get(leaseManagerApiUrl + "GetLeasesByIds?" + idList.toString());
     };
 
-    createLease = (lease) => {
+    CreateLease = (lease) => {
         return axios.post(leaseManagerApiUrl + "CreateLease", lease);
     };
 
-    updateLease = (lease) => {
+    UpdateLease = (lease) => {
         return axios.post(leaseManagerApiUrl + "UpdateLease", lease);
     };
 
-    deleteLease = (id) => {
+    DeleteLease = (id) => {
         return axios.delete(leaseManagerApiUrl + "DeleteLease?id=" + id);
     };
 }
+
+export default new LeaseManagerAPIService();

@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 
 import Table from 'react-bootstrap/Table';
 
-import axios from 'axios';
 import { GetLeaseHeaderRows } from '../Utils/GlobalConstants.js';
-import getAllLeases from '../Services/LeaseManagerAPIService.js';
+import LeaseManagerAPIService  from '../Services/LeaseManagerAPIService.js';
 
 class LeaseDashboard extends Component {
     componentDidMount() {
-        axios.get('http://localhost:25007/GetAllLeases').then(result => {
+        LeaseManagerAPIService.GetAllLeases().then(result => {
             this.setState({
                 leases: result.data
             });
