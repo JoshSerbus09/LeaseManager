@@ -17,12 +17,6 @@ function LeaseManager() {
           <h1>Lease Management Dashboard</h1>
         </Jumbotron>
 
-        <Nav>
-          <Nav.Link title="Leases"><Button title="Import">Leases</Button></Nav.Link>
-          <Nav.Link title="Import"><Button title="Import">Import</Button></Nav.Link>
-          <Nav.Link title="Export"><Button title="Import">Export</Button></Nav.Link>
-        </Nav>
-
         <LeaseDashboard />
     </div>
   );

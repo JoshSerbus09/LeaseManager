@@ -6,9 +6,7 @@ import LeaseManager from './App';
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <LeaseManager />
-  </React.StrictMode>,
+    <LeaseManager />,
   document.getElementById('root')
 );
 

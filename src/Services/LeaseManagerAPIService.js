@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var leaseManagerApiUrl = 'http://localhost:5000/';
+var leaseManagerApiUrl = 'http://localhost:25007/';
 
 class LeaseManagerAPIService{
     GetAllLeases = () => {
@@ -12,22 +12,45 @@ class LeaseManagerAPIService{
     };
 
     GetLeasesByIds = (ids) => {
-        let idList = Array.from(ids).map(id => "&id=" + id);
+        
+        const idList = Array.from(ids).map(id => "&id=" + id);
 
         return axios.get(leaseManagerApiUrl + "GetLeasesByIds?" + idList.toString());
     };
 
-    CreateLease = (lease) => {
-        return axios.post(leaseManagerApiUrl + "CreateLease", lease);
+    CreateLease = (data) => {
+        return axios.post(leaseManagerApiUrl + "CreateLease", data).then(result => {
+            
+            debugger;
+            return result.data;
+        })
+        .catch(error => {
+            console.log('### Error attempting to create lease:\n' + error.data);
+        });
     };
 
-    UpdateLease = (lease) => {
-        return axios.post(leaseManagerApiUrl + "UpdateLease", lease);
+    CreateLeases = (data) => {
+        return axios.post(leaseManagerApiUrl + "CreateLeases", data).then(result => {
+            debugger;
+            return result.data;
+        }).catch(error => {
+            console.log('### Error attempting to crete leases:\n' + error);
+        });
+    };
+
+    UpdateLease = (data) => {
+        return axios.post(leaseManagerApiUrl + "UpdateLease", data).then(result => {
+            const lease = result;
+            console.log(result);
+            return lease;
+        });
     };
 
     DeleteLease = (id) => {
         return axios.delete(leaseManagerApiUrl + "DeleteLease?id=" + id);
     };
 }
+
+
 
 export default new LeaseManagerAPIService();

@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 
 import Table from 'react-bootstrap/Table';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
 
 import { GetLeaseHeaderRows } from '../Utils/GlobalConstants.js';
 import LeaseManagerAPIService  from '../Services/LeaseManagerAPIService.js';
+import LeaseImportModal  from './LeaseImportModal.js';
+
 
 class LeaseDashboard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            leases: [],
+            shouldShowModal: false
+        };
+    }
+    
     componentDidMount() {
         LeaseManagerAPIService.GetAllLeases().then(result => {
             this.setState({
@@ -15,17 +28,18 @@ class LeaseDashboard extends Component {
     }
 
     getLeases = () => {
-        if (this.state == null)
-        {
-            return [];
-        }
-
         return this.state.leases;
     }
     
-    render() {
+    render() {  
         return (
+           
             <div className="LeaseDashboard">
+                <Nav>
+                    <Nav.Link title="Leases"><Button title="Import" onClick={() => this.setState({shouldShowModal: true})}>Import</Button></Nav.Link>
+                    <Nav.Link title="Export"><Button title="Import">Export</Button></Nav.Link>
+                </Nav>
+                
                 <Table 
                     responsive
                     striped
@@ -56,9 +70,12 @@ class LeaseDashboard extends Component {
                         })}
                     </tbody>
                 </Table>
+                
+                <LeaseImportModal shouldShowModal={this.state.shouldShowModal}/>
             </div>
         );
     }
 }
 
 export default LeaseDashboard;
+
