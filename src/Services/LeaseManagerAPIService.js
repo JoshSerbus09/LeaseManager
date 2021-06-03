@@ -7,6 +7,10 @@ class LeaseManagerAPIService{
         return axios.get(leaseManagerApiUrl + "GetAllLeases");
     };
 
+    ExportLeasePayments = (start, end) => {
+        return axios.get(leaseManagerApiUrl + 'ExportMonthlyPayments?startDate=' + start.toLocaleString('m-dd-yyyy') + '&endDate=' + end.toLocaleString('m-ds-yyyy'));
+    }
+
     GetLeaseById = (id) => {
         return axios.get(leaseManagerApiUrl + "GetLeaseById?id=" + id);
     };

@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { GetLeaseHeaderRows } from '../Utils/GlobalConstants.js';
 import LeaseManagerAPIService  from '../Services/LeaseManagerAPIService.js';
 import LeaseImportModal  from './LeaseImportModal.js';
+import ExportPaymentModal  from './ExportPaymentModal.js';
 
 
 class LeaseDashboard extends Component {
@@ -15,13 +16,13 @@ class LeaseDashboard extends Component {
 
         this.getLeases = this.getLeases.bind(this);
         this.hideImportModal = this.hideImportModal.bind(this);
+        this.hideExportModal = this.hideExportModal.bind(this);
         this.updateLeases = this.updateLeases.bind(this);
-        this.exportLeases = this.exportLeases.bind(this);
 
         this.state = {
-            selectedLeaseRows: null,
             leases: [],
-            shouldShowModal: false
+            shouldShowModal: false,
+            shouldShowExportModal: false
         };
     }
     
@@ -43,6 +44,12 @@ class LeaseDashboard extends Component {
             shouldShowModal: false
         });
     }
+
+    hideExportModal = () => {
+        this.setState({
+            shouldShowExportModal: false
+        });
+    }
     
     updateLeases = () => {
         LeaseManagerAPIService.GetAllLeases().then(result => {
@@ -52,19 +59,6 @@ class LeaseDashboard extends Component {
         });
     }
 
-    exportLeases = () => {
-        var leasesJson = JSON.stringify(this.getLeases());
-        var fileBlob = new Blob([leasesJson], {type: 'application/json'});
-        var url = URL.createObjectURL(fileBlob);
-
-        var element = document.createElement('a');
-
-        element.href = url
-        element.download = 'leases_export.json';
-        
-        element.click();
-    }
-    
     render() {  
         return (
            
@@ -77,15 +71,13 @@ class LeaseDashboard extends Component {
                     </Nav.Link>
                     
                     <Nav.Link title="Export">
-                        <Button title="Export" onClick={this.exportLeases}>
+                        <Button title="Export" onClick={() => this.setState({shouldShowExportModal: true})}>
                             Export
                         </Button>
                     </Nav.Link>
                 </Nav>
                 
                 <Table 
-                    columns
-                    data={this.getLeases()}
                     responsive
                     striped
                     bordered
@@ -120,6 +112,9 @@ class LeaseDashboard extends Component {
                 <LeaseImportModal shouldShowModal={this.state.shouldShowModal} 
                     updateLeases={this.updateLeases}
                     hideImportModal={this.hideImportModal}/>
+
+                <ExportPaymentModal show={this.state.shouldShowExportModal} 
+                    hideExportModal={this.hideExportModal} />
             </div>
         );
     }

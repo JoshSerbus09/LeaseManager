@@ -249,7 +249,7 @@ class LeaseImportModal extends Component {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
-                        <Button variant="primary" onClick={this.saveLeases}> Save Changes</Button>
+                        <Button variant="primary" onClick={this.saveLeases}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
         );
