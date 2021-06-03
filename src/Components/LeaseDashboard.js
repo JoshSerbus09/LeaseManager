@@ -14,8 +14,9 @@ class LeaseDashboard extends Component {
         super(props);
 
         this.getLeases = this.getLeases.bind(this);
-        this.updateLeases = this.updateLeases.bind(this);
         this.hideImportModal = this.hideImportModal.bind(this);
+        this.updateLeases = this.updateLeases.bind(this);
+        this.exportLeases = this.exportLeases.bind(this);
 
         this.state = {
             selectedLeaseRows: null,
@@ -50,14 +51,36 @@ class LeaseDashboard extends Component {
             });
         });
     }
+
+    exportLeases = () => {
+        var leasesJson = JSON.stringify(this.getLeases());
+        var fileBlob = new Blob([leasesJson], {type: 'application/json'});
+        var url = URL.createObjectURL(fileBlob);
+
+        var element = document.createElement('a');
+
+        element.href = url
+        element.download = 'leases_export.json';
+        
+        element.click();
+    }
     
     render() {  
         return (
            
             <div className="LeaseDashboard">
                 <Nav>
-                    <Nav.Link title="Leases"><Button title="Import" onClick={() => this.setState({shouldShowModal: true})}>Import</Button></Nav.Link>
-                    <Nav.Link title="Export"><Button title="Import">Export</Button></Nav.Link>
+                    <Nav.Link title="Leases">
+                        <Button title="Import" onClick={() => this.setState({shouldShowModal: true})}>
+                            Import
+                        </Button>
+                    </Nav.Link>
+                    
+                    <Nav.Link title="Export">
+                        <Button title="Export" onClick={this.exportLeases}>
+                            Export
+                        </Button>
+                    </Nav.Link>
                 </Nav>
                 
                 <Table 
