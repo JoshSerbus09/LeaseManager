@@ -12,7 +12,8 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 - The Stored leases will automatically populate with the application load
-- Click 'Import' to select a CSV lease file to import. The app will show a review window for the staged leases. Click 'Save Changes' to save the staged leases to the DB
+- Click 'Import' to select a CSV lease file to import. The app will show a review window for the staged leases. Click 'Save Changes' to save the staged leases to the DB.
+  - a sample csv file has been provided
 - Click 'Export' to load the Date Range Selection Modal. Select your start and end range, then click 'Submit'. The CSV report will download in your browser.
 
 
