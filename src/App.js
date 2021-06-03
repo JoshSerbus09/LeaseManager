@@ -1,8 +1,7 @@
-import { Jumbotron, Nav } from 'react-bootstrap';
+import { Jumbotron } from 'react-bootstrap';
 import './App.css';
 
 import LeaseDashboard from './Components/LeaseDashboard';
-import Button from 'react-bootstrap/Button';
 
 function LeaseManager() {
   return (

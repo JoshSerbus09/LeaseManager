@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var leaseManagerApiUrl = 'http://localhost:5000/';
+var leaseManagerApiUrl = 'http://localhost:52007/';
 
 class LeaseManagerAPIService{
     GetAllLeases = () => {

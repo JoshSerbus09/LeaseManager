@@ -1,4 +1,4 @@
-import react, {Component, useState} from 'react';
+import {Component} from 'react';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -192,7 +192,7 @@ class LeaseImportModal extends Component {
     }
 
     saveLeases = () => {
-        if (this.state.importedLeaseObjects.length == 0)
+        if (this.state.importedLeaseObjects.length === 0)
         {
            return;
         }
