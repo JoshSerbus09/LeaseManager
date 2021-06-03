@@ -3,9 +3,6 @@ import {Component} from 'react';
 import {Card} from 'react-bootstrap';
 import '../Styling/LeaseItem.css';
 
-import checkImg from '../assets/img/check.png';
-import invalidImg from '../assets/img/invalid.png';
-
 class LeaseItem extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +73,7 @@ class LeaseItem extends Component {
 
                     <div class='li-info-container'>
                         <div id="li-is-valid">
-                            {this.state.IsValid ? <img src={checkImg} alt='valid'/> : <img src={invalidImg} alt='invalid'/>}
+                            {this.state.IsValid ? <img src={process.env.PUBLIC_URL + '/assets/img/check.png'} alt='valid'/> : <img src={process.env.PUBLIC_URL + '/assets/img/invalid.png'} alt='invalid'/>}
                         </div>
                     </div>
                 </div>
