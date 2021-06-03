@@ -24,8 +24,6 @@ class LeaseManagerAPIService{
 
     CreateLease = (data) => {
         return axios.post(leaseManagerApiUrl + "CreateLease", data).then(result => {
-            
-            debugger;
             return result.data;
         })
         .catch(error => {
@@ -35,7 +33,6 @@ class LeaseManagerAPIService{
 
     CreateLeases = (data) => {
         return axios.post(leaseManagerApiUrl + "CreateLeases", data).then(result => {
-            debugger;
             return result.data;
         }).catch(error => {
             console.log('### Error attempting to crete leases:\n' + error);
