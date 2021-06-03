@@ -107,6 +107,7 @@ class LeaseImportModal extends Component {
         }
 
         let parsedLeases = [];
+        let allValid = true;
 
         for(let ix = 1; ix <= lineSplits.length - 1; ix++) {
             let rowCommaSplit = lineSplits[ix].split(',');
@@ -138,9 +139,24 @@ class LeaseImportModal extends Component {
             else {
                 tmpLeaseModel.IsValid = this.validateLease(tmpLeaseModel)
 
+                allValid = allValid && tmpLeaseModel.IsValid;
+
+                console.log('lease "' + tmpLeaseModel.Name + '" isValid?: ' + tmpLeaseModel.IsValid );
+                console.log('allValid?: ' + allValid);
+
                 parsedLeases.push(tmpLeaseModel);
             }
         }
+
+        console.log('validState?: ' + this.state.allLeasesValid);
+
+
+        this.setState({
+            allLeasesValid: allValid
+        });
+
+        console.log('validState?: ' + this.state.allLeasesValid);
+
 
         return parsedLeases;
     }
@@ -159,23 +175,28 @@ class LeaseImportModal extends Component {
 
         let numPaymentsValid = true;
 
-        var tmpDate = new Date(lease.StartDate);
-            tmpDate.setMonth(tmpDate.getMonth() + lease.NumPayments);
+        var paymentYears = Math.floor(lease.NumPayments / 12);
+        var remainingPaymentMonths = lease.NumPayments % 12; 
 
-        if (tmpDate >= lease.EndDate)
+        var tmpDate = new Date(lease.StartDate);
+
+        tmpDate.setFullYear(tmpDate.getFullYear() + paymentYears);
+        tmpDate.setMonth(tmpDate.getMonth() + remainingPaymentMonths - 1); // subtract a month due to 0-month payment
+
+        if (lease.NumPayments < 0 || tmpDate >= leaseEnd)
         {
             numPaymentsValid = false;
-            lease.Messages.push('Number of lease payments must not exceed the number of months in the lease.')
+            lease.Messages.push('Number of lease payments must be greater than 0, and not exceed the number of months in the lease.')
         }
 
         let paymentAmountValid = true;
-        if (lease.PaymentAmount <= (-1000000) || lease.PaymentAmount >= (1000000)){
+        if (parseFloat(lease.PaymentAmount) <= (-1000000) || parseFloat(lease.PaymentAmount) >= (1000000)){
             paymentAmountValid = false;
             lease.Messages.push('Lease payment amount must be between -$999,999 and $999,999.');
         }
 
         let interestRateValid = true;
-        if (lease.InterestRate <= 0 || lease.InterestRate >= 1)
+        if (parseFloat(lease.InterestRate) <= 0 || parseFloat(lease.InterestRate >= 1))
         {
             interestRateValid = false;
             lease.Messages.push('Lease interest rate must be a decimal between 0 and 1');
@@ -249,7 +270,7 @@ class LeaseImportModal extends Component {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
-                        <Button variant="primary" onClick={this.saveLeases}>Save Changes</Button>
+                        <Button variant="primary" disabled={!this.state.allLeasesValid} onClick={this.saveLeases}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
         );

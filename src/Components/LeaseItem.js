@@ -3,6 +3,9 @@ import {Component} from 'react';
 import {Card} from 'react-bootstrap';
 import '../Styling/LeaseItem.css';
 
+import checkImg from '../assets/img/check.png';
+import invalidImg from '../assets/img/invalid.png';
+
 class LeaseItem extends Component {
     constructor(props) {
         super(props);
@@ -34,7 +37,7 @@ class LeaseItem extends Component {
         }
 
         return (
-            <Card>
+            <Card className='li-card' bg={this.state.IsValid ? 'light' : 'warn'}> 
                 <Card.Title>
                     <div className='li-title'>
                         {this.state.Name}
@@ -44,44 +47,44 @@ class LeaseItem extends Component {
                 <Card.Body>
                 <div className='li-body'>
                     <div class='li-info-container'>
-                        <label for="lease-start-date">Start Date</label><br />
+                        <label>Start Date</label><br />
                         <p name="lease-start-date">{this.state.StartDate}</p>
                     </div>
                     
 
                     <div class='li-info-container'>
-                        <label for="lease-end-date">End Date</label><br />
+                        <label>End Date</label><br />
                         <p name="lease-end-date">{this.state.EndDate}</p>
                     </div>
                     
 
                     <div class='li-info-container'>
-                        <label for="lease-payment-amount">Payment Amount</label><br />
+                        <label>Payment Amount</label><br />
                         <p name="lease-lease-payment-amount">{getPaymentAmountString()}</p>
                     </div>
                     
                     <div class='li-info-container'>
-                        <label for="lease-num-payments">Scheduled Payments</label><br />
+                        <label>Payments</label><br />
                         <p name="lease-num-payments">{this.state.NumPayments}</p>
                     </div>
                     
 
                     <div class='li-info-container'>
-                        <label for="lease-interest-rate">Interest Rate</label><br />
+                        <label>Interest Rate</label><br />
                         <p name="lease-interest-rate">{getInterestRateString()}</p>
                     </div>
 
                     <div class='li-info-container'>
                         <div id="li-is-valid">
-                            {this.state.IsValid ? 'Valid!' : 'Invalid'}
+                            {this.state.IsValid ? <img src={checkImg} alt='valid'/> : <img src={invalidImg} alt='invalid'/>}
                         </div>
-                    </div>
-
-                    <div>
-                        
                     </div>
                 </div>
                 </Card.Body>
+
+                <Card.Footer>
+                    {Array.from(this.state.Messages).map(msg => <p>{msg}</p>)}
+                </Card.Footer>
             </Card>
         );
     }
