@@ -27,7 +27,11 @@ class LeaseDashboard extends Component {
     }
     
     componentDidMount() {
-        this.updateLeases();
+        LeaseManagerAPIService.GetAllLeases().then(result => {
+            this.setState({
+                leases: result.data
+            });
+        });
     }
 
     getLeases = () => {
