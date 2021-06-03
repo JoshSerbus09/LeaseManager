@@ -51,7 +51,7 @@ class ExportPaymentModal extends Component {
             var element = document.createElement('a');
     
             element.href = url
-            element.download = 'export-' + GetFormattedDate(this.state.startDate) + '_' + GetFormattedDate(this.state.endDate) + '.json';
+            element.download = 'export-' + GetFormattedDate(this.state.startDate) + '_' + GetFormattedDate(this.state.endDate) + '.csv';
             
             element.click();
         });
