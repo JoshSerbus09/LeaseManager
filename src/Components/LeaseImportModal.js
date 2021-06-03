@@ -8,7 +8,6 @@ import {GetLeaseHeaderRows} from '../Utils/GlobalConstants.js';
 import LeaseManagerAPIService from '../Services/LeaseManagerAPIService.js';
 
 import LeaseItem from './LeaseItem.js';
-import axios from 'axios';
 
 class LeaseImportModal extends Component {
     constructor(props){
@@ -23,6 +22,7 @@ class LeaseImportModal extends Component {
         this.setImportedText = this.setImportedText.bind(this);
         this.validateLease = this.validateLease.bind(this);
         this.saveLeases = this.saveLeases.bind(this);
+        this.handleClose = this.handleClose.bind(this);
 
         this.state = {
             rawCSVText: 'ld_base',
@@ -199,23 +199,28 @@ class LeaseImportModal extends Component {
         
         const request = Array.from(this.state.importedLeaseObjects);
     
-        var savedLeases = LeaseManagerAPIService.CreateLeases(request);
+        LeaseManagerAPIService.CreateLeases(request).then(result => {
+            this.props.updateLeases();
+
+            this.props.hideImportModal();
+        });
+
     }
 
-    render() {        
-        const handleClose = () => {
-            this.setState({
-                rawCSVText: '',
-                importedLeaseObjects: [],
-                shouldShowModal: false
-            });
+    handleClose = () => {
+        this.setState({
+            rawCSVText: '',
+            importedLeaseObjects: [],
+            shouldShowModal: false
+        });
 
-            this.forceUpdate();
-        }
+        this.forceUpdate();
+    }
 
+    render() {  
         return (
                 <Modal show={this.state.shouldShowModal}
-                    onHide={handleClose}
+                    onHide={this.handleClose}
                     size='xl'>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -243,7 +248,7 @@ class LeaseImportModal extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+                        <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
                         <Button variant="primary" onClick={this.saveLeases}> Save Changes</Button>
                     </Modal.Footer>
                 </Modal>

@@ -13,22 +13,42 @@ class LeaseDashboard extends Component {
     constructor(props) {
         super(props);
 
+        this.getLeases = this.getLeases.bind(this);
+        this.updateLeases = this.updateLeases.bind(this);
+        this.hideImportModal = this.hideImportModal.bind(this);
+
         this.state = {
+            selectedLeaseRows: null,
             leases: [],
             shouldShowModal: false
         };
     }
     
     componentDidMount() {
+        this.updateLeases();
+    }
+
+    getLeases = () => {
+        if (this.state.leases.length === 0)
+        {
+            this.updateLeases();
+        }
+
+        return this.state.leases;
+    }
+
+    hideImportModal = () => {
+        this.setState({
+            shouldShowModal: false
+        });
+    }
+    
+    updateLeases = () => {
         LeaseManagerAPIService.GetAllLeases().then(result => {
             this.setState({
                 leases: result.data
             });
         });
-    }
-
-    getLeases = () => {
-        return this.state.leases;
     }
     
     render() {  
@@ -41,11 +61,12 @@ class LeaseDashboard extends Component {
                 </Nav>
                 
                 <Table 
+                    columns
+                    data={this.getLeases()}
                     responsive
                     striped
                     bordered
-                    hover
-                    empty="No Data Yet">
+                    hover >
                     <thead>
                         <tr>
                             {Array.from(GetLeaseHeaderRows()).map((item, ix) => {
@@ -55,23 +76,27 @@ class LeaseDashboard extends Component {
                     </thead>
 
                     <tbody>
-                        {Array.from(this.getLeases()).map((row, ix) => {
-                            return <tr key={ix}>
-                                <td>{row.Name}</td>
-                                <td>{new Date(row.StartDate).toLocaleDateString()}</td>
-                                <td>{new Date(row.EndDate).toLocaleDateString()}</td>
-                                <td>{row.PaymentAmount.toLocaleString('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD'
-                                })}</td>
-                                <td>{row.NumPayments}</td>
-                                <td>{row.InterestRate.toFixed(2) + ' %'}</td>
-                            </tr>
-                        })}
+                        {this.getLeases().map((row, ix) => {
+                            return (
+                                <tr key={ix}>
+                                    <td>{row.Name}</td>
+                                    <td>{new Date(row.StartDate).toLocaleDateString()}</td>
+                                    <td>{new Date(row.EndDate).toLocaleDateString()}</td>
+                                    <td>{row.PaymentAmount.toLocaleString('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    })}</td>
+                                    <td>{row.NumPayments}</td>
+                                    <td>{row.InterestRate.toFixed(2) + ' %'}</td>
+                                </tr>
+                            );}
+                        )}
                     </tbody>
                 </Table>
                 
-                <LeaseImportModal shouldShowModal={this.state.shouldShowModal}/>
+                <LeaseImportModal shouldShowModal={this.state.shouldShowModal} 
+                    updateLeases={this.updateLeases}
+                    hideImportModal={this.hideImportModal}/>
             </div>
         );
     }
