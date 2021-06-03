@@ -225,7 +225,7 @@ class LeaseImportModal extends Component {
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <Button label="Import" >
-                                <input type="file" onChange={(e) => this.importLeases(e)} />
+                                <input type="file" onChange={(e) => this.importLeases(e)} accept=".csv"/>
                             </Button>
                         </Modal.Title>
                     </Modal.Header>
